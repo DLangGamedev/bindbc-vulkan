@@ -186,6 +186,10 @@ __gshared
     }
     else version(Posix)
     {
-        // TODO
+        version(VK_USE_PLATFORM_XLIB_KHR)
+        {
+            PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
+            PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
+        }
     }
 }

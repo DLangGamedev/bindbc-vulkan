@@ -23,41 +23,43 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-module bindbc.vulkan.system.windows;
+module bindbc.vulkan.system.wayland;
 
 import bindbc.vulkan.base;
 import bindbc.vulkan.types;
 
-version(Windows):
-
-import core.sys.windows.windows;
+version(linux):
 
 extern(System):
 
-enum VK_KHR_win32_surface = 1;
-enum VK_KHR_WIN32_SURFACE_SPEC_VERSION = 5;
-enum VK_KHR_WIN32_SURFACE_EXTENSION_NAME = "VK_KHR_win32_surface";
+mixin VK_DEFINE_NON_DISPATCHABLE_HANDLE!"WlDisplayHandle";
+mixin VK_DEFINE_NON_DISPATCHABLE_HANDLE!"WlSurfaceHandle";
 
-alias VkWin32SurfaceCreateFlagsKHR = VkFlags;
+enum VK_KHR_wayland_surface = 1;
+enum VK_KHR_WAYLAND_SURFACE_SPEC_VERSION = 5;
+enum VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME = "VK_KHR_wayland_surface";
 
-struct VkWin32SurfaceCreateInfoKHR
+alias VkWaylandSurfaceCreateFlagsKHR = VkFlags;
+
+struct VkWaylandSurfaceCreateInfoKHR
 {
     VkStructureType sType;
     const(void)* pNext;
-    VkWin32SurfaceCreateFlagsKHR flags;
-    HINSTANCE hinstance;
-    HWND hwnd;
+    VkWaylandSurfaceCreateFlagsKHR flags;
+    WlDisplayHandle display;
+    WlSurfaceHandle surface;
 }
 
 extern(System) @nogc nothrow
 {
-    alias PFN_vkCreateWin32SurfaceKHR = VkResult function(
+    alias PFN_vkCreateWaylandSurfaceKHR = VkResult function(
         VkInstance instance,
-        const(VkWin32SurfaceCreateInfoKHR)* pCreateInfo,
+        const(VkWaylandSurfaceCreateInfoKHR)* pCreateInfo,
         const(VkAllocationCallbacks)* pAllocator,
         VkSurfaceKHR* pSurface);
     
-    alias PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR = VkBool32 function(
+    alias PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = VkBool32 function(
         VkPhysicalDevice physicalDevice,
-        uint queueFamilyIndex);
+        uint queueFamilyIndex,
+        WlDisplayHandle display);
 }

@@ -29,9 +29,9 @@ module bindbc.vulkan.prototypes;
 
 import bindbc.vulkan.base;
 import bindbc.vulkan.types;
-import bindbc.vulkan.system;
+public import bindbc.vulkan.system;
 
-extern(C) @nogc nothrow
+extern(System) @nogc nothrow
 {
     alias PFN_vkCreateInstance = VkResult function(const(VkInstanceCreateInfo)* pCreateInfo, const(VkAllocationCallbacks)* pAllocator, VkInstance* pInstance);
     alias PFN_vkDestroyInstance = void function(VkInstance instance, const(VkAllocationCallbacks)* pAllocator);
@@ -192,20 +192,4 @@ extern(C) @nogc nothrow
     alias PFN_vkCreateDisplayPlaneSurfaceKHR = nothrow VkResult function(VkInstance instance, const(VkDisplaySurfaceCreateInfoKHR)* pCreateInfo, const(VkAllocationCallbacks)* pAllocator, VkSurfaceKHR* pSurface);
     
     alias PFN_vkCreateSharedSwapchainsKHR = nothrow VkResult function(VkDevice device, uint swapchainCount, const(VkSwapchainCreateInfoKHR)* pCreateInfos, const(VkAllocationCallbacks)* pAllocator, VkSwapchainKHR* pSwapchains);
-
-    version(Windows)
-    {
-        alias PFN_vkCreateWin32SurfaceKHR = VkResult function(
-            VkInstance instance,
-            const(VkWin32SurfaceCreateInfoKHR)* pCreateInfo,
-            const(VkAllocationCallbacks)* pAllocator,
-            VkSurfaceKHR* pSurface);
-        alias PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR = VkBool32 function(
-            VkPhysicalDevice physicalDevice,
-            uint queueFamilyIndex);
-    }
-    else version(Posix)
-    {
-        // TODO
-    }
 }

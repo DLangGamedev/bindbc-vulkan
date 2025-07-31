@@ -28,7 +28,6 @@ DEALINGS IN THE SOFTWARE.
 module bindbc.vulkan.types;
 
 import bindbc.vulkan.base;
-import bindbc.vulkan.system;
 
 extern(System):
 

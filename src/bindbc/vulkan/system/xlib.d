@@ -23,60 +23,46 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-module bindbc.vulkan.system.android;
+module bindbc.vulkan.system.xlib;
 
-version(Android):
+import bindbc.vulkan.base;
+import bindbc.vulkan.types;
+
+version(linux):
 
 extern(System):
 
-public
-{
-    import bindbc.vulkan.base;
-    import bindbc.vulkan.types;
-}
+mixin VK_DEFINE_NON_DISPATCHABLE_HANDLE!"XLibDisplayHandle";
 
-enum libNames = "";
+alias XLibWindow = uint;
+alias XLibVisualID = uint;
 
-enum VK_KHR_android_surface = 1;
-enum VK_KHR_ANDROID_SURFACE_SPEC_VERSION   = 6;
-enum VK_KHR_ANDROID_SURFACE_EXTENSION_NAME = "VK_KHR_android_surface";
+enum VK_KHR_xlib_surface = 1;
+enum VK_KHR_XLIB_SURFACE_SPEC_VERSION = 6;
+enum VK_KHR_XLIB_SURFACE_EXTENSION_NAME = "VK_KHR_xlib_surface";
 
-alias VkAndroidSurfaceCreateFlagsKHR = VkFlags;
+alias VkXlibSurfaceCreateFlagsKHR = VkFlags;
 
-struct VkAndroidSurfaceCreateInfoKHR
+struct VkXlibSurfaceCreateInfoKHR
 {
     VkStructureType sType;
     const(void)* pNext;
-    VkAndroidSurfaceCreateFlagsKHR flags;
-    ANativeWindow* window;
+    VkXlibSurfaceCreateFlagsKHR flags;
+    XLibDisplayHandle dpy;
+    XLibWindow window;
 }
 
-/*
-// TODO: move to bindbc.vulkan.prototypes
-alias PFN_vkCreateAndroidSurfaceKHR = nothrow VkResult function(
-    VkInstance instance,
-    const(VkAndroidSurfaceCreateInfoKHR)* pCreateInfo,
-    const(VkAllocationCallbacks)* pAllocator,
-    VkSurfaceKHR* pSurface);
-*/
-
-/*
-mixin template Functions()
+extern(System) @nogc nothrow
 {
-    PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
-    pragma(inline, true)
-    void bindFunctions(alias bind)()
-    {
-        bind(cast(void**)&vkCreateAndroidSurfaceKHR, "vkCreateAndroidSurfaceKHR");
-    }
-}
-
-version(none)
-{
-    VkResult vkCreateAndroidSurfaceKHR(
+    alias PFN_vkCreateXlibSurfaceKHR = VkResult function(
         VkInstance instance,
-        const(VkAndroidSurfaceCreateInfoKHR)* pCreateInfo,
+        const(VkXlibSurfaceCreateInfoKHR)* pCreateInfo,
         const(VkAllocationCallbacks)* pAllocator,
         VkSurfaceKHR* pSurface);
+    
+    alias PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = VkBool32 function(
+        VkPhysicalDevice physicalDevice,
+        uint queueFamilyIndex,
+        XLibDisplayHandle dpy,
+        XLibVisualID visualID);
 }
-*/

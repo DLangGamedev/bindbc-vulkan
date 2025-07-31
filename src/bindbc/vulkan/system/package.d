@@ -25,16 +25,12 @@ DEALINGS IN THE SOFTWARE.
 */
 module bindbc.vulkan.system;
 
-version(Posix)
+version(linux)
 {
-    // TODO
-    //public import bindbc.vulkan.system.posix;
+    public import bindbc.vulkan.system.xlib;
+    public import bindbc.vulkan.system.wayland;
 }
 else version(Windows)
 {
     public import bindbc.vulkan.system.windows;
-}
-else version(Android)
-{
-    public import bindbc.vulkan.system.android;
 }
