@@ -36,7 +36,7 @@ enum VulkanSupport
 {
     noLibrary,
     badLibrary,
-    v103
+    v10
 }
 
 private
@@ -119,7 +119,7 @@ VulkanSupport loadVulkan(const(char)* libName)
                 __traits(getMember, bindbc.vulkan.funcs, symbol).stringof);
     }
     
-    loadedVersion = VulkanSupport.v103;
+    loadedVersion = VulkanSupport.v10;
     
     if (errorCount() != errCount)
         return VulkanSupport.badLibrary;
