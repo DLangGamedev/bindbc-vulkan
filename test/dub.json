@@ -1,0 +1,23 @@
+{
+    "name": "demo",
+    "description": "bindbc-vulkan demo",
+    "homepage": "https://github.com/DLangGamedev/bindbc-vulkan",
+    "license": "BSL-1.0",
+    "authors": [
+        "Timur Gafarov"
+    ],
+    "dependencies": {
+        "bindbc-vulkan": { "path": ".." },
+        "bindbc-sdl": "~>1.0.1"
+    },
+    "versions": [
+        "SDL_2010"
+    ],
+    "buildRequirements": [
+        "allowWarnings"
+    ],
+    "mainSourceFile": "src/main.d",
+    "targetType": "executable",
+    "lflags-linux": ["-rpath=."],
+    "copyFiles-windows-x86_64": ["lib/x64/*.dll"]
+}
